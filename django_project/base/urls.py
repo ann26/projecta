@@ -17,7 +17,9 @@ from views import (
     GithubListView,
     GithubOrgsView,
     GithubSubmitView,
-    custom_404
+    custom_404,
+
+    RegisterTrainingCentreView
 )
 
 urlpatterns = patterns(
@@ -67,6 +69,11 @@ urlpatterns = patterns(
     url(regex='^project/submit-github-repo/$',
         view=GithubSubmitView.as_view(),
         name='submit-github-repo'),
+
+    # training & certification
+    url(regex='^project/create/$',
+         view=RegisterTrainingCentreView.as_view(),
+         name='register-training-centre'),
 )
 
 # Prevent cloudflare from showing an ad laden 404 with no context

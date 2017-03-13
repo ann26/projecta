@@ -236,3 +236,22 @@ class ApproveProjectView(StaffuserRequiredMixin, ProjectMixin, RedirectView):
         project.approved = True
         project.save()
         return reverse(self.pattern_name)
+
+
+class RegisterTrainingCentreView(LoginRequiredMixin, ProjectMixin, CreateView):
+    context_object_name = 'project',
+    template_name = 'project/create.html',
+
+
+    def get_form_kwargs(self):
+        kwargs = super(RegisterTrainingCentreView, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
+    def form_valid(self, form):
+         """Check that there is no referential integrity error when saving."""
+         try:
+             return super(RegisterTrainingCentreView, self).form_valid(form)
+         except IntegrityError:
+             return ValidationError(
+                 'ERROR: Project by this name already exists!')

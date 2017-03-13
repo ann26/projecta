@@ -28,4 +28,19 @@ class Migration(migrations.Migration):
                 'ordering': ['name'],
             },
         ),
+
+        migrations.CreateModel(
+            name='TrainingCentre',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(help_text='Name of Organisation/Institution', max_length=255)),
+                ('org_email', models.CharField(help_text='Email address', max_length=500, null=True, blank=True)),
+                ('org_address', models.CharField(help_text='Organisation/Institution Address')),
+                ('org_phone', models.CharField(help_text='Organisation/Institution Contact Number')),
+                ('course_name', models.CharField(help_text='Selected Course')),
+            ],
+            options={
+                'ordering': ['name'],
+            }
+        )
     ]
