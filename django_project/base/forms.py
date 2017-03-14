@@ -11,6 +11,7 @@ from crispy_forms.layout import (
 )
 from models import (
     Project,
+    TrainingCenter,
 )
 
 logger = logging.getLogger(__name__)
@@ -79,39 +80,37 @@ class SignupForm(forms.Form):
         user.save()
 
 
-# class TrainingCentreForm(forms.Form):
-#     # noinspection PyClassicStyleClass
-#     class Meta:
-#         """Meta class."""
-#         model = Project
-#         fields = (
-#             'name',
-#             'email',
-#             'address',
-#             'phone',
-#             'course'
-#         )
-#
-#     def __init__(self, *args, **kwargs):
-#         self.user = kwargs.pop('user')
-#         self.helper = FormHelper()
-#         layout = Layout(
-#             Fieldset(
-#                 'Convener details',
-#                 Field('name', css_class="form-control"),
-#                 Field('email', css_class="form-control"),
-#                 Field('address', css_class="form-control"),
-#                 Field('phone', css_class="form-control"),
-#                 Field('course', css_class="form-control"),
-#                 css_id='project-form')
-#         )
-#         self.helper.layout = layout
-#         self.helper.html5_required = False
-#         super(TrainingCentreForm, self).__init__(*args, **kwargs)
-#         self.helper.add_input(Submit('submit', 'Submit'))
-#
-#     def save(self, commit=True):
-#         instance = super(TrainingCentreForm, self).save(commit=False)
-#         instance.owner = self.user
-#         instance.save()
-#         return instance
+class TrainingCenterForm(forms.Form):
+    # noinspection PyClassicStyleClass
+    class Meta:
+        """Meta class."""
+        model = TrainingCenter
+        fields = (
+            'name',
+            'email',
+            'address',
+            'phone',
+        )
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        self.helper = FormHelper()
+        layout = Layout(
+            Fieldset(
+                'Convener details',
+                Field('name', css_class="form-control"),
+                Field('email', css_class="form-control"),
+                Field('address', css_class="form-control"),
+                Field('phone', css_class="form-control"),
+                css_id='project-form')
+        )
+        self.helper.layout = layout
+        self.helper.html5_required = False
+        super(TrainingCenterForm, self).__init__(*args, **kwargs)
+        self.helper.add_input(Submit('submit', 'Submit'))
+
+    def save(self, commit=True):
+        instance = super(TrainingCenterForm, self).save(commit=False)
+        instance.owner = self.user
+        instance.save()
+        return instance

@@ -1,45 +1,45 @@
 # coding=utf-8
 """Project model used by all apps."""
 
-# import os
+import os
 import logging
-# import string
-# import re
+import string
+import re
 from django.core.urlresolvers import reverse
 from django.utils.text import slugify
-# from django.conf.global_settings import MEDIA_ROOT
+from django.conf.global_settings import MEDIA_ROOT
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from core.settings.contrib import STOP_WORDS
-# from django.conf import settings
-# from django.core.exceptions import ValidationError
+from django.conf import settings
+from django.core.exceptions import ValidationError
 from unidecode import unidecode
 
 
 logger = logging.getLogger(__name__)
 
-class ApprovedTCManager(models.Manager):
-    """ Custom convener manager that shows only approved conveners """
+class ApprovedTrainingCenterManager(models.Manager):
+    """ Custom training centre manager that shows only approved conveners """
 
     def get_queryset(self):
         """ Query set generator """
         return super(
-            ApprovedTCManager, self).get_queryset().filter(approved=True)
+            ApprovedTrainingCenterManager, self).get_queryset().filter(approved=True)
 
 
-class UnapprovedTCManager(models.Manager):
-    """ Custom convener manager that shows only unapproved training centre """
+class UnapprovedTrainingCenterManager(models.Manager):
+    """ Custom training centre manager that shows only unapproved training centre """
 
     def get_queryset(self):
         """ Query set generator """
         return super(
-            UnapprovedTCManager, self).get_queryset().filter(approved=False)
+            UnapprovedTrainingCenterManager, self).get_queryset().filter(approved=False)
 
 
-class TrainingCentre(models.Model):
+class TrainingCenter(models.Model):
     """ Training Centre / Organisation registration """
     name = models.CharField(
-        help_text=_('Organisation/Institution name who intend to be a Training Centre'),
+        help_text=_('Organisation/Institution name who intend to be a Training Center'),
         max_length=150,
         null=False,
         blank=False,
@@ -67,21 +67,14 @@ class TrainingCentre(models.Model):
         blank=False
     )
 
-    course = models.CharField(
-        help_text=_('Course options'),
-        max_length=250,
-        null=False,
-        blank=False
-    )
-
     slug = models.SlugField(unique=True)
     objects = models.Manager()
-    approved_objects = ApprovedTCManager()
-    unapproved_objects = UnapprovedTCManager()
+    approved_objects = ApprovedTrainingCenterManager()
+    unapproved_objects = UnapprovedTrainingCenterManager()
 
-    # noinspection PyClassicStyleClass
+    # noinspection PyClassicStyleClass.
     class Meta:
-        """ Meta class for conveners """
+        """ Meta class for training centre. """
         app_label = 'base'
         ordering = ['name']
 
@@ -98,7 +91,7 @@ class TrainingCentre(models.Model):
             new_list = unidecode(' '.join(filtered_words))
             self.slug = slugify(new_list)[:50]
 
-        super(TrainingCentre, self).save(*args, **kwargs)
+        super(TrainingCenter, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return u'%s' % self.name
@@ -110,4 +103,4 @@ class TrainingCentre(models.Model):
         :rtype: str
 
         """
-        return reverse('convener-detail', kwargs={'slug': self.slug})
+        return reverse('training-centre-detail', kwargs={'slug': self.slug})
