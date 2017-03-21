@@ -1,0 +1,98 @@
+{% extends "project_base.html" %}
+{% load thumbnail %}
+{% load custom_markup %}
+
+{% block title %}Training Center - {{ block.super }}{% endblock %}
+
+{% block extra_head %}
+{% endblock %}
+
+{% block page_title %}
+    <h1>Training Center (all)</h1>
+{% endblock page_title %}
+
+{% block content %}
+    <div class="page-header">
+        <h1 class="text-muted">
+            {% if unapproved %}Unapproved {% endif %}
+            Training Center
+            {% if user.is_authenticated %}
+                <div class="pull-right btn-group">
+                    <a class="btn btn-default btn-mini tooltip-toggle"
+                       href='{% url "trainingcenter-create" project_slug %}'
+                       data-title="Create New Training Center">
+                        {% show_button_icon "add" %}
+                    </a>
+                    {% if not unapproved %}
+                        <a class="btn btn-default btn-mini tooltip-toggle"
+                           href='{% url "pending-trainingcenter-list" project_slug %}'
+                           data-title="View Pending Training Centers">
+                            <span class="glyphicon glyphicon-time"></span>
+                        </a>
+                    {% else %}
+                        <a class="btn btn-default btn-mini tooltip-toggle"
+                           href='{% url "trainingcenter-list" project_slug %}'
+                           data-title="View Training Center">
+                            <span class="glyphicon glyphicon-th-list"></span>
+                        </a>
+                    {% endif %}
+                    {% if user.is_staff %}
+                        <a class="btn btn-default btn-mini tooltip-toggle"
+                            href='{% url "trainingcenter-order" project_slug %}'
+                            data-title="Order Training Center">
+                            <span class="glyphicon glyphicon-sort-by-order"></span>
+                        </a>
+                    {% endif %}
+                </div>
+                    <span id="order-saved" hidden class="alert alert-success" style="font-size: 9pt; padding: 3px;font-style: italic;">
+                        order saved</span>
+                    <span id="order-not-saved" hidden class="alert alert-danger" style="font-size: 9pt; padding: 3px;font-style: italic;">
+                        order not saved</span>
+            {% endif %}
+        </h1>
+    </div>
+
+    {% if user.is_authenticated and user.is_staff %}
+        <ul id="sortable" data-url="{% url "trainingcenter-submit-order" project_slug %}">
+    {% else %}
+        <ul>
+    {% endif %}
+
+    {% for trainingcenter in trainingcenters %}
+        <li class="row order" style="margin-top:10px;" id="{{ trainingcenter.id }}-{{ trainingcenter.name }}">
+            <div class="col-lg-10">
+                <h4>{{ trainingcenter.name }}</h4>
+            </div>
+            <div class="col-lg-2">
+                <div class="btn-group pull-right">
+                    {%  if not trainingcenter.approved and user.is_staff %}
+                        <a class="btn btn-default btn-mini"
+                           href='{% url "trainingcenter-approve" project_slug=trainingcenter.project.slug slug=trainingcenter.slug %}'>
+                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                        </a>
+                    {% endif %}
+                    <a class="btn btn-default btn-mini"
+                       href='{% url "trainingcenter-delete" project_slug=trainingcenter.project.slug slug=trainingcenter.slug %}'>
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </a>
+                    <a class="btn btn-default btn-mini"
+                       href='{% url "trainingcenter-update" project_slug=trainingcenter.project.slug slug=trainingcenter.slug %}'>
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    <a class="btn btn-default btn-mini"
+                       href='{% url "trainingcenter-detail" project_slug=trainingcenter.project.slug slug=trainingcenter.slug %}'>
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </a>
+                </div>
+            </div>
+        </li>
+    {%  endfor %}
+
+    </ul>
+    <hr />
+
+    <script>
+
+    </script>
+
+{% endblock %}
