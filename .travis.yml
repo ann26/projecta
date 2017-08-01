@@ -35,7 +35,7 @@ script:
   - cd django_project
   - python manage.py makemigrations
   - python manage.py migrate
-  - coverage run --source='.' manage.py test --settings core.settings.test
+  - coverage run manage.py test
 
 after_success:
   - coveralls
