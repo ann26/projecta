@@ -14,7 +14,7 @@ python:
   - '2.7'
 
 sudo: false
-dist: precise
+dist: trusty
 
 addons:
   postgresql: "9.3"
@@ -36,7 +36,7 @@ script:
   - cd django_project
   - python manage.py makemigrations
   - python manage.py migrate
-  - coverage run manage.py test
+  - coverage run manage.py test base changes github_issue certification
 
 after_success:
   - coveralls
