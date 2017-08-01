@@ -13,6 +13,8 @@ env:
 python:
   - '2.7'
 
+sudo: false
+
 addons:
   postgresql: "9.3"
   apt:
