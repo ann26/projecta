@@ -20,6 +20,9 @@ python:
 addons:
   postgresql: "9.3"
 
+git:
+  depth: 30
+
 install:
   - pip install coveralls
   - pip install -r REQUIREMENTS-dev.txt
