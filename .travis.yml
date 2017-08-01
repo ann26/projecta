@@ -12,16 +12,11 @@ env:
 
 sudo: false
 
-dist: precise
-
 python:
   - '2.7'
 
 addons:
   postgresql: "9.3"
-
-git:
-  depth: 30
 
 install:
   - pip install coveralls
