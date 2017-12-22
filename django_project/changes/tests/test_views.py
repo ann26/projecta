@@ -259,22 +259,22 @@ class TestEntryViews(TestCase):
                 '/set_language/', data={'language': 'en'})
         logging.disable(logging.CRITICAL)
         self.project = ProjectF.create(
-                name='testproject')
+                name=u'testproject')
         self.version = VersionF.create(
                 project=self.project,
-                name='1.0.1')
+                name=u'1.0.1')
         self.category = CategoryF.create(
                 project=self.project,
-                name='testcategory')
+                name=u'testcategory')
         self.entry = EntryF.create(
             category=self.category,
             version=self.version,
-            title='testentry',
+            title=u'testentry',
             approved=True)
         self.pending_entry = EntryF.create(
             category=self.category,
             version=self.version,
-            title='testentry2',
+            title=u'testentry2',
             approved=False)
         self.user = UserF.create(**{
             'username': 'timlinux',
@@ -511,10 +511,10 @@ class TestVersionViews(TestCase):
         self.project = ProjectF.create(name='testproject')
         self.version = VersionF.create(
                 project=self.project,
-                name='1.0.1')
+                name=u'1.0.1')
         self.category = CategoryF.create(
                 project=self.project,
-                name='testcategory')
+                name=u'testcategory')
 
         self.user = UserF.create(**{
             'username': 'timlinux',
@@ -689,7 +689,7 @@ class TestVersionViews(TestCase):
 
         version_to_delete = VersionF.create(
                 project=self.project,
-                name='8.1.1')
+                name=u'8.1.1')
         post_data = {
             'pk': version_to_delete.pk
         }
@@ -709,7 +709,7 @@ class TestVersionViews(TestCase):
 
         version_to_delete = VersionF.create(
                 project=self.project,
-                name='2.0.1')
+                name=u'2.0.1')
         response = self.client.post(reverse('version-delete', kwargs={
             'slug': version_to_delete.slug,
             'project_slug': self.version.project.slug
@@ -1030,13 +1030,13 @@ class TestSponsorshipPeriodViews(TestCase):
                 '/set_language/', data={'language': 'en'})
         logging.disable(logging.CRITICAL)
         self.project = ProjectF.create(
-                name='testproject')
+                name=u'testproject')
         self.sponsor = SponsorF.create(
                 project=self.project,
-                name='Kartoza')
+                name=u'Kartoza')
         self.sponsorship_level = SponsorshipLevelF.create(
                 project=self.project,
-                name='Gold')
+                name=u'Gold')
         self.sponsorship_period = SponsorshipPeriodF.create(
             sponsor=self.sponsor,
             sponsorship_level=self.sponsorship_level,
