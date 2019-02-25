@@ -23,7 +23,6 @@ addons:
     - postgresql-9.3-postgis-2.3
 
 install:
-  - python -c "import sys; print ('UCS4 build' if sys.maxunicode > 65535 else 'UCS2 build')"
   - pip install codecov
   - pip install -r REQUIREMENTS-dev.txt
 
@@ -33,6 +32,7 @@ before_script:
   - psql -c 'CREATE EXTENSION postgis;' -U postgres -d test_db
 
 script:
+  - python -c "import sys; print ('UCS4 build' if sys.maxunicode > 65535 else 'UCS2 build')"
   - cd deployment
   - make flake8
   - cd ../django_project
