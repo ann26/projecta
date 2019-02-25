@@ -11,6 +11,7 @@ env:
     - DJANGO_SETTINGS_MODULE=core.settings.test_travis
 
 sudo: false
+dist: trusty
 
 python:
   - '2.7'
@@ -31,6 +32,8 @@ before_script:
   - psql -c 'CREATE EXTENSION postgis;' -U postgres -d test_db
 
 script:
+  - ./configure --enable-unicode=ucs4
+  - import sys; print sys.maxunicode
   - cd deployment
   - make flake8
   - cd ../django_project
