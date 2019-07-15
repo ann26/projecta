@@ -66,13 +66,13 @@
         <div class="col-lg-8" style="text-align:right;">
             <h2>
                 <strong>
-                    {% trans 'Section' %} : {{ worksheet.section.name }}
+                    {% trans 'Section' %} : {{ section_number }}. {{ worksheet.section.name }}
                 </strong>
                 {{ worksheet.section|is_translation_up_to_date }}
             </h2>
             <h3 style="margin-top:-10px;margin-bottom:20px;">
                 <i>
-                    {% trans 'Module' %} : {{ worksheet.module }}
+                    {% trans 'Module' %} : {{ module_number }}. {{ worksheet.module }}
                 </i>
                 {{ worksheet|is_translation_up_to_date }}
             </h3>
@@ -419,7 +419,7 @@
             <div class="col-lg-12 text-center" style="margin-bottom: 10px;">
                 {% if worksheet.external_data %}
                 <p>
-                    {% blocktrans with url=worksheet.external_data.url %}Click <a target="_blank" href="{{ url }}">here</a> to download the sample data for the lesson.{% endblocktrans %}
+                    {% blocktrans with url=worksheet.external_data.url %}Click <a target="_blank" href="{{ url }}" download="{{ file_title }}">here</a> to download the sample data for the lesson.{% endblocktrans %}
                 </p>
                 {% endif %}
             </div>

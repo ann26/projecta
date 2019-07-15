@@ -20,7 +20,7 @@ beautifulsoup4==4.6.0
 # disqus
 django-disqus==0.5
 # custom slugify
-awesome-slugify==1.4
+awesome-slugify==1.6.5
 #translation management tool
 django-rosetta==0.7.0
 # youtube embed
@@ -32,6 +32,6 @@ django-allauth==0.25.2
 Unidecode==0.4.20
 reportlab==3.4.0
 xhtml2pdf==0.2b1
-django-modeltranslation
+django-modeltranslation==0.12.2
 django-colorfield
 WeasyPrint==0.42.3
